@@ -3,3 +3,15 @@
  * Copyright 2013-2016 Elbit Developers
  * Licensed under MIT (https://github.com/elbitdigital/base/blob/master/LICENSE)
 */
+
+.container {
+    width: 100%;
+}
+
+@media (min-width: 48em) {
+
+    .container {
+        max-width: 48em;
+    }
+
+}

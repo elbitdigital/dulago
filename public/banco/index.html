@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="roboto">
+<meta charset="UTF-8">
+<title>Banco</title>
+<meta name="theme-color" content="#000">
+<link rel="manifest" href="manifest.json">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<script src="../dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="../dist/css/villa.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="../dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="../dist/css/villa-cross.min.css"/>
+<script src="../dist/js/html5shiv.js"></script>
+<script src="../dist/js/html5shiv-printshiv.js"></script>
+<script src="../dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+    body {
+        background-color: #f5f5f5;
+    }
+
+    main {
+        padding: 1em;
+    }
+
+    /* Transaction List */
+
+    .TransactionList {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        /*padding: 1em;*/
+        min-height: 100vh;
+        max-width: 36em;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    /* Transaction Item */
+
+    .TransactionItem {
+        -webkit-box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, .2);
+        -moz-box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, .2);
+        box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, .2);
+        background-color: #ffffff;
+        border-radius: 3px;
+        color: #616161;
+        font-weight:700;
+        margin-bottom: 1em;
+        padding: 1em;
+        width: 100%;
+    }
+
+    .TransactionItem:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .TransactionItem.is-debit {
+        color: #f44336;
+    }
+
+    .TransactionItem.is-credit {
+        color: #2196f3;
+    }
+
+    /* Transaction Value Input */
+
+    .TransactionValueInput {
+        background-color: #ffffff;
+        border-radius: 3px;
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 0 1px rgba(0 ,0 ,0 , 0.08);
+        -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 0 1px rgba(0 ,0 ,0 , 0.08);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 0 1px rgba(0 ,0 ,0 , 0.08);
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        width: 100%;
+        max-width: 36em;
+        margin: 0 auto 1em;
+        -webkit-transition: box-shadow .2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        -moz-transition: box-shadow .2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        -ms-transition: box-shadow .2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        -o-transition: box-shadow .2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        transition: box-shadow .2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        padding: .5em 1em;
+    }
+
+    /* input */
+
+    .TransactionValueInput input {
+        color: #212121;
+        border: none;
+        height: 3em;
+        font-weight: 700;
+        padding: .5em;
+        min-width: 3em;
+        margin-right: 1em;
+    }
+
+    .TransactionValueInput button {
+        background-color: #1e88e5;
+        border: none;
+        color: #ffffff;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        font-weight: 700;
+        padding: 0 1em;
+        height: 3em;
+        text-transform: uppercase;
+    }
+
+</style>
+
+<body>
+
+<main>
+
+    <div class="TransactionValueInput">
+
+        <input id="inputElement" type="number" step=".5" value="0.00">
+
+        <button id="inputButtonElement"><span>Adicionar</span></button>
+
+    </div>
+
+    <div id="transactionList" class="TransactionList"></div>
+
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+        authDomain: "dulago-com-br.firebaseapp.com",
+        databaseURL: "https://dulago-com-br.firebaseio.com",
+        storageBucket: "dulago-com-br.appspot.com",
+        messagingSenderId: "265386755560"
+    };
+    firebase.initializeApp(config);
+</script>
+
+<script>
+
+
+    /* Transaction Item */
+
+    var TransactionItem = (function () {
+
+    	/**
+    	 * Transaction Item constructor
+    	 * @constructor
+    	 */
+    	function TransactionItem(data) {
+
+            this.data = data;
+    		this.element = this.createElement();
+
+    	}
+
+    	TransactionItem.prototype.convertDotToComma = function (valueWithDot) {
+
+            try {
+
+                return valueWithDot.toFixed(2).toString().replace('.', ',');
+
+            } catch (e) {
+
+                return '0,00';
+
+            }
+
+        };
+
+        TransactionItem.prototype.getElement = function () {
+
+    	    return this.element;
+
+        };
+
+    	TransactionItem.prototype.createElement = function () {
+
+    	    var element = document.createElement('div');
+    	    element.className = 'TransactionItem';
+    	    element.innerText = 'R$ ' + this.convertDotToComma(this.data.value);
+
+    	    if (this.data.value > 0)
+                element.classList.add('is-credit');
+    	    else
+                element.classList.add('is-debit');
+
+    	    return element;
+
+        };
+
+    	return TransactionItem;
+
+    })();
+
+</script>
+
+<script>
+
+    var inputElement = document.getElementById('inputElement');
+
+    document.getElementById('inputButtonElement').addEventListener('click', function () {
+
+        transactionsRef.push({
+            value: parseFloat(inputElement.value),
+            type: 'entrada',
+            description: 'vendas'
+        });
+
+    });
+
+    var total = 0;
+
+    var transactionListElement = document.getElementById('transactionList');
+
+    var databaseRef = firebase.database();
+    var transactionsRef = databaseRef.ref('transactions/');
+
+    transactionsRef.on('child_added', function (snap) {
+
+        var data = snap.val();
+
+        var transactionItem = new TransactionItem(data);
+        transactionListElement.appendChild(transactionItem.getElement());
+
+        total += data.value;
+/*
+        if (total > 100)
+            console.log('você tem ' + total + ' reais no banco, parabêns');
+        else if (total < 1)
+            console.log('você deve ' + total + ' reais pro banco, seu infeliz');
+        else
+            console.log('você tem ' + total + ' reais no banco');
+*/
+    });
+
+    var connectedRef = firebase.database().ref(".info/connected");
+    connectedRef.on("value", function(snap) {
+
+        if (snap.val() === true) {
+            console.log("connected");
+        } else {
+            console.log("not connected");
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>

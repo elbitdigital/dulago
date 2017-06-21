@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Marmitaria Du Lago</title>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<meta name="theme-color" content="#b71c1c"/>
+<script src="https://use.typekit.net/dxo6usq.js"></script>
+<script>
+
+  try {
+    Typekit.load({
+      loading: function () {
+        // Javascript to execute when fonts start loading
+        console.log('loading');
+        document.documentElement.classList.add('is-loading');
+      },
+      active: function () {
+        // Javascript to execute when fonts become active
+        console.log('active');
+        document.documentElement.classList.remove('is-loading');
+        document.documentElement.classList.add('is-active');
+      },
+      inactive: function () {
+        // Javascript to execute when fonts become inactive
+        console.log('inactive');
+        document.documentElement.classList.remove('is-loading');
+      }
+    })
+  } catch (e) {
+  }
+
+</script>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<link rel="stylesheet" href="dist/css/dulago.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+    body {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        -webkit-justify-content: center;
+        justify-content: center;
+    }
+
+</style>
+
+<style>
+
+    .Header {
+        min-width: 18em;
+        max-width: 24em;
+        padding: .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .Header-inner {
+        background-color: #fff;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        padding: 1em;
+        position: relative;
+        width: 100%;
+    }
+
+</style>
+
+<style>
+
+    .TodayMenuList {
+        min-width: 18em;
+        max-width: 36em;
+        padding: .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .TodayMenuList-inner {
+        background-color: #eeeeee;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        padding: 1em;
+        position: relative;
+        width: 100%;
+    }
+
+</style>
+
+<style>
+
+    .Menu {
+        background-color: #ffffff;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        padding: .5em;
+        margin-bottom: 1em;
+    }
+
+    .Menu-header {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .Menu input.Menu-dateTitle {
+        background: transparent;
+        border: none;
+        border-radius: 2px;
+        color: #b71c1c;
+        font-size: 1em;
+        font-weight: 900;
+        margin-right: .5rem;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+        padding: .5rem;
+        width: 11em;
+    }
+
+    .Menu-list {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        width: 100%;
+    }
+
+    .Menu-addMenuItemButton {
+        background: none;
+        background-color: #eeeeee;
+        border: none;
+        border-radius: 2px;
+        color: #d50000;
+        font-family: "program-narrow", sans-serif;
+        font-size: 1em;
+        font-weight: 900;
+        letter-spacing: 1pt;
+        padding: .5rem;
+        text-transform: uppercase;
+    }
+
+    .Menu-dropButton {
+        background: none;
+        border: none;
+    }
+
+    .Button {
+        cursor: pointer;
+    }
+
+</style>
+
+<style>
+
+    .MenuItem {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: .5em;
+        width: 100%;
+    }
+
+    .MenuItem input {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+        background: transparent;
+        border: none;
+        border-radius: 2px;
+        color: #757575;
+        font-size: .875em;
+        font-weight: 500;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+        margin-right: .5rem;
+        padding: .5rem;
+    }
+
+    .MenuItem ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: #bdbdbd;
+        font-weight: 400;
+    }
+
+    .MenuItem ::-moz-placeholder { /* Firefox 19+ */
+        color: #bdbdbd;
+        font-weight: 400;
+    }
+
+    .MenuItem :-ms-input-placeholder { /* IE 10+ */
+        color: #bdbdbd;
+        font-weight: 400;
+    }
+
+    .MenuItem :-moz-placeholder { /* Firefox 18- */
+        color: #bdbdbd;
+        font-weight: 400;
+    }
+
+    .MenuItem input:last-of-type {
+        margin-right: 0;
+    }
+
+    .MenuItem input:focus {
+        background-color: #fafafa;
+        color: #424242;
+        font-size: 1em;
+    }
+
+    .MenuItem input.MenuItem-fontSize {
+        /*background-color: #bdbdbd;*/
+        max-width: 3.75rem;
+    }
+
+    .MenuItem input.MenuItem-itemTitle {
+        /*background-color: #fafafa;*/
+        min-width: 10rem;
+        max-width: 16rem;
+    }
+
+    .MenuItem-dropButton {
+        -webkit-align-items: center;
+        align-items: center;
+        background: none;
+        background-color: transparent;
+        border-radius: 50%;
+        border: none;
+        color: #d50000;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        height: 2.25em;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+        width: 2.25em;
+    }
+
+    .MenuItem-dropButton:hover,
+    .MenuItem-dropButton:focus {
+        background-color: #e0e0e0;
+    }
+
+    .MenuItem-dropButton span {
+        font-size: 1em;
+    }
+
+</style>
+
+<body class="grey-100 tk-program-narrow font-red-900">
+
+<header class="Header">
+
+    <div class="Header-inner">
+
+        <h1>O <span class="red-900 font-white">incrível</span> editor de Cardápios Diários</h1>
+
+    </div>
+
+</header>
+
+<main id="todayMenuList" class="TodayMenuList">
+
+    <div class="TodayMenuList-inner">
+
+        <ul id="todayMenuList_list" class="TodayMenuList-list"></ul>
+
+        <a class="Button" onclick="addNewMenu();">Adicionar novo menu</a>
+
+    </div>
+
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+    authDomain: "dulago-com-br.firebaseapp.com",
+    databaseURL: "https://dulago-com-br.firebaseio.com",
+    projectId: "dulago-com-br",
+    storageBucket: "dulago-com-br.appspot.com",
+    messagingSenderId: "265386755560"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+
+  var todayMenu = {};
+
+  // default menu data
+  todayMenu.data = {
+    date: '2017-06-01',
+    weekDay: 'Quinta',
+    dateTitle: 'Seg, 1 de Junho',
+    items: [
+      {
+        itemTitle: 'Arroz',
+        fontSize: 1.1
+      },
+      {
+        itemTitle: 'Feijão',
+        fontSize: 1
+      },
+      {
+        itemTitle: '',
+        fontSize: 1
+      },
+      {
+        itemTitle: '',
+        fontSize: 1
+      },
+      {
+        itemTitle: '',
+        fontSize: 1
+      },
+      {
+        itemTitle: 'Refogado',
+        fontSize: .8
+      },
+      {
+        itemTitle: 'Salada',
+        fontSize: 1
+      }
+    ]
+  };
+
+</script>
+
+<script>
+
+  var todayMenuList = {};
+
+  todayMenuList.element = document.getElementById('todayMenuList');
+  todayMenuList.listElement = document.getElementById('todayMenuList_list');
+
+  function addMenuElement(key, data) {
+
+    var menuReferenceKey = key;
+    var menuData = data;
+    var menuRef = menusRef.child(key);
+
+    var menuElement = document.createElement('div');
+    menuElement.className = 'Menu';
+    menuElement.dataset.menuReferenceKey = key;
+
+    // cria o header do menu (com titulo e botões de ação)
+    var menuHeaderElement = document.createElement('div');
+    menuHeaderElement.className = 'Menu-header';
+
+    var dateTitleElement = document.createElement('input');
+    dateTitleElement.className = 'Menu-dateTitle';
+    dateTitleElement.type = 'text';
+    dateTitleElement.value = data.dateTitle;
+    dateTitleElement.addEventListener('input', function () {
+
+      menuRef.child('dateTitle/').set(this.value);
+
+    });
+    dateTitleElement.addEventListener('blur', function () {
+
+      this.value = this.value.replace(/\s+$/, '');
+      menuRef.child('dateTitle/').set(this.value);
+
+    });
+    menuRef.child('dateTitle/').on('value', function (snap) {
+
+      dateTitleElement.innerText = snap.val();
+
+    });
+
+    var dropButtonElement = document.createElement('button');
+    dropButtonElement.innerHTML = '<span class="icon-trash"></span>';
+    dropButtonElement.dataset.menuReferenceKey = key;
+    dropButtonElement.className = 'Menu-dropButton';
+    dropButtonElement.onclick = function () {
+
+      dropMenu(this.dataset.menuReferenceKey);
+
+    };
+
+    // coloca o botão e o titulo dentro do elemento do header
+    menuHeaderElement.appendChild(dateTitleElement);
+    menuHeaderElement.appendChild(dropButtonElement);
+
+    // coloca o header dentro do elemento menu
+    menuElement.appendChild(menuHeaderElement);
+
+    // cria elemento lista de items
+    var menuListElement = document.createElement('ul');
+
+    // cria os items do cardápio
+    menusRef.child(key + '/items').on('child_added', function (snap) {
+
+      var menuItemReferenceKey = snap.key;
+      var menuItemData = snap.val();
+
+      // elemento do item
+      var menuItemElement = document.createElement('li');
+      menuItemElement.className = 'MenuItem';
+      menuItemElement.dataset.menuItemReferenceKey = menuItemReferenceKey;
+      menuItemElement.dataset.menuReferenceKey = menuReferenceKey;
+
+      // titulo do item
+      var menuItemTitleInputFieldElement = document.createElement('input');
+      menuItemTitleInputFieldElement.className = 'MenuItem-itemTitle';
+      menuItemTitleInputFieldElement.type = 'text';
+      menuItemTitleInputFieldElement.value = menuItemData.itemTitle;
+      menuItemTitleInputFieldElement.placeholder = 'Titulo do Item';
+      menuItemTitleInputFieldElement.addEventListener('input', function () {
+
+        menusRef.child(this.parentElement.dataset.menuReferenceKey + '/items/' + this.parentElement.dataset.menuItemReferenceKey + '/itemTitle').set(this.value);
+
+      });
+      menuItemTitleInputFieldElement.addEventListener('blur', function () {
+
+        this.value = this.value.replace(/\s+$/, '');
+        menusRef.child(this.parentElement.dataset.menuReferenceKey + '/items/' + this.parentElement.dataset.menuItemReferenceKey + '/itemTitle').set(this.value);
+
+      });
+      menuItemTitleInputFieldElement.addEventListener('blur', function () {
+
+        this.value = this.value.replace(/\s+$/, '');
+
+      });
+      menuItemElement.appendChild(menuItemTitleInputFieldElement);
+
+      // tamanho da fonte do item
+      var menuItemFontSizeInputFieldElement = document.createElement('input');
+      menuItemFontSizeInputFieldElement.className = 'MenuItem-fontSize';
+      menuItemFontSizeInputFieldElement.type = 'number';
+      menuItemFontSizeInputFieldElement.step = .05;
+      menuItemFontSizeInputFieldElement.value = menuItemData.fontSize || 0;
+      menuItemFontSizeInputFieldElement.addEventListener('input', function () {
+
+        menusRef.child(this.parentElement.dataset.menuReferenceKey + '/items/' + this.parentElement.dataset.menuItemReferenceKey + '/fontSize').set(this.value);
+
+      });
+      menuItemElement.appendChild(menuItemFontSizeInputFieldElement);
+
+      // tamanho da fonte do item
+      var menuItemDropButton = document.createElement('button');
+      menuItemDropButton.className = 'MenuItem-dropButton';
+      menuItemDropButton.innerHTML = '<span class="icon-minus-squared"></span>';
+      menuItemDropButton.addEventListener('click', function () {
+
+        menusRef.child(this.parentElement.dataset.menuReferenceKey + '/items/' + this.parentElement.dataset.menuItemReferenceKey).set(null);
+//        this.parentElement.parentElement.removeChild(this.parentElement);
+
+      });
+      menuItemElement.appendChild(menuItemDropButton);
+
+      // adiciona o item na lista
+      menuListElement.appendChild(menuItemElement);
+
+    });
+
+    // remove os items do cardápio
+    menusRef.child(key + '/items').on('child_removed', function (snap) {
+
+      var menuItemElement = document.querySelector('.MenuItem[data-menu-item-reference-key=' + snap.key);
+      if (menuItemElement)
+        menuItemElement.parentElement.removeChild(menuItemElement);
+
+    });
+
+    // coloca o elemento da lista dentro do menu
+    menuElement.appendChild(menuListElement);
+
+    var addMenuItemButtonElement = document.createElement('button');
+    addMenuItemButtonElement.className = 'Menu-addMenuItemButton';
+    addMenuItemButtonElement.innerText = 'Adicionar item';
+    addMenuItemButtonElement.addEventListener('click', function () {
+
+      menuRef.child('items/').push({
+        itemTitle: '',
+        fontSize: 1
+      });
+
+    });
+
+    menuElement.appendChild(addMenuItemButtonElement);
+
+    // pra finalizar, coloca o menu dentro do elemento do todayMenu
+    todayMenuList.listElement.appendChild(menuElement);
+
+  }
+
+</script>
+
+<script>
+
+  var database = firebase.database().ref('/');
+  var todayMenuRef = firebase.database().ref('todayMenu/');
+  var menusRef = firebase.database().ref('todayMenu/menus/');
+
+  /*
+   * todayMenu
+   *   menus
+   *
+   *
+   * */
+
+  //  todayMenuRef.set(null);
+
+  function addNewMenu() {
+
+    var key = menusRef.push({
+      date:todayMenu.data.date,
+      weekDay:todayMenu.data.weekDay,
+      dateTitle:todayMenu.data.dateTitle
+    }).key;
+
+    for (var i = 0; i < todayMenu.data.items.length; i++)
+      menusRef.child(key + '/items').push(todayMenu.data.items[i]);
+
+  }
+
+  function dropMenu(key) {
+
+    console.log('menu ' + key + ' removido!');
+    menusRef.child(key).set(null);
+
+  }
+
+  menusRef.orderByChild('dateTitle').on('child_added', function (snap) {
+
+    addMenuElement(snap.key, snap.val());
+
+  });
+
+  menusRef.on('child_removed', function (snap) {
+
+    var element = document.querySelectorAll('.Menu[data-menu-reference-key=' + snap.key + ']')[0];
+    element.parentElement.removeChild(element);
+
+  });
+
+</script>
+
+</body>
+
+</html>

@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <meta charset="UTF-8">
-<title>Marmitaria Du'Lago</title>
+<title>Marmitaria Du Lago</title>
 <meta name="viewport"
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<meta name="theme-color" content="#b71c1c"/>
 <script src="https://use.typekit.net/dxo6usq.js"></script>
 <script>
 
-	try {
-		Typekit.load({
-			loading: function() {
-				// Javascript to execute when fonts start loading
-				console.log('loading');
-				document.documentElement.classList.add('is-loading');
-			},
-			active: function() {
-				// Javascript to execute when fonts become active
-				console.log('active');
-				document.documentElement.classList.remove('is-loading');
-				document.documentElement.classList.add('is-active');
-			},
-			inactive: function() {
-				// Javascript to execute when fonts become inactive
-				console.log('inactive');
-				document.documentElement.classList.remove('is-loading');
-			}
-		})
-	} catch(e) {}
+    try {
+        Typekit.load({
+            loading: function() {
+                // Javascript to execute when fonts start loading
+                console.log('loading');
+                document.documentElement.classList.add('is-loading');
+            },
+            active: function() {
+                // Javascript to execute when fonts become active
+                console.log('active');
+                document.documentElement.classList.remove('is-loading');
+                document.documentElement.classList.add('is-active');
+            },
+            inactive: function() {
+                // Javascript to execute when fonts become inactive
+                console.log('inactive');
+                document.documentElement.classList.remove('is-loading');
+            }
+        })
+    } catch(e) {}
 
 </script>
 <script src="dist/js/villa.min.js"></script>
@@ -40,16 +41,700 @@
 <script src="dist/js/classList.min.js"></script>
 <![endif]-->
 
-<body>
+<style>
+
+    .Header {
+        width: 100%;
+        /*min-height: 100vh;*/
+        position: relative;
+    }
+
+    .Header-background {
+        height: 100%;
+        position: absolute;
+        width: 100%;
+    }
+
+    .Header-inner {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        height: 100%;
+        padding: 1em 0 0;
+        position: relative;
+        width: 100%;
+    }
+
+    .Header-logo {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        padding: 0;
+        margin-bottom: 1.5em;
+    }
+
+    .Header-logo img {
+        height: 3.75em;
+    }
+
+    .Header-todayMenu {
+        width: 100%;
+    }
+
+</style>
+
+<style>
+
+    .TodayMenu {
+        margin-bottom: 1.5em;
+    }
+
+    .TodayMenu-list {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        padding: 0 1em;
+    }
+
+    /* Today Menu header */
+
+    .TodayMenu-header {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        -webkit-justify-content: center;
+        justify-content: center;
+        margin-bottom: 1em;
+        width: 100%;
+    }
+
+    .TodayMenu-header h2 {
+        color: #ffffff;
+        font-family: "program-narrow", sans-serif;
+        font-size: 1.5em;
+        font-weight: 500;
+        line-height: 1;
+        text-shadow: 2px 2px 4px rgba(16, 16, 16, .36);
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    /* Today Menu date */
+
+    .TodayMenu-date {
+        -webkit-align-items: flex-end;
+        align-items: flex-end;
+        color: #ffffff;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        padding: 0 1em;
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .TodayMenu-date span {
+        font-family: "program-narrow", sans-serif;
+        font-weight: 500;
+        line-height: 1;
+        text-shadow: 2px 2px 4px rgba(16, 16, 16, .36);
+        text-transform: uppercase;
+        font-size: .875em;
+    }
+
+    .TodayMenu-date .weekDay {
+        font-size: .75em;
+        font-weight: 700;
+        letter-spacing: .375pt;
+        line-height: 1.5;
+        text-transform: uppercase;
+    }
+
+    .TodayMenu-date .monthDay {
+        font-family: "program", sans-serif;
+        font-size: 3.75em;
+        font-weight: 500;
+        line-height: .75;
+        /*letter-spacing: -3pt;*/
+    }
+
+    .TodayMenu-date .month {
+        font-family: "program-narrow", sans-serif;
+        font-size: .625em;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: .75;
+        letter-spacing: .375pt;
+    }
+
+</style>
+
+<style>
+
+    .TodayMenuItem {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        margin-bottom: 1pt;
+        padding: 0 1rem;
+        width: 100%;
+    }
+
+    .TodayMenuItem-name {
+        color: #ffffff;
+        font-family: "program-narrow", sans-serif;
+        font-size: 1.5em;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: .75pt;
+        text-transform: uppercase;
+        text-align: center;
+    }
+    
+    .TodayMenuItem-name span {
+        text-shadow: 2px 2px 4px rgba(16, 16, 16, .36);
+    }
+
+    @media (min-width: 60em) {
+
+        .TodayMenuItem-name {
+            font-size: 3.75em;
+        }
+
+    }
+
+</style>
+
+<style>
+
+    .PriceList {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        font-family: "program-narrow", sans-serif;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        -webkit-justify-content: center;
+        justify-content: center;
+        margin-top: -.5em;
+        margin-bottom: 1em;
+        width: 100%;
+    }
+
+    .PriceList h2 {
+        color: #ffffff;
+        font-size: 1.3125em;
+        font-weight: 500;
+        margin-bottom: .75rem;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(16, 16, 16, .36);
+        text-transform: uppercase;
+    }
+
+    .PriceList-list {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        -webkit-justify-content: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0 .5em;
+    }
+
+</style>
+
+<style>
+
+    .PriceListItem {
+        background-color: #ffffff;
+        border-radius: 6px;
+        -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .36);
+        -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, .36);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, .36);
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        margin: .5em 1em 1.5em 0;
+        position: relative;
+        height: 4.5em;
+        width: 4.5em;
+    }
+
+    .PriceListItem--small {
+        height: 2.25em;
+        width: 2.25em;
+    }
+
+    .PriceListItem--small {
+        height: 3em;
+        width: 3em;
+    }
+
+    .PriceListItem:last-of-type {
+        margin-right: 0;
+    }
+
+    .PriceListItem:before {
+        -webkit-align-items: center;
+        align-items: center;
+        background-color: #ffca28;
+        border-radius: 50%;
+        color: #c62828;
+        content: 'R$';
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        font-size: .75em;
+        font-weight: 900;
+        height: 1rem;
+        -webkit-justify-content: center;
+        justify-content: center;
+        position: absolute;
+        text-align: center;
+        left: -.5rem;
+        top: -.5rem;
+        width: 1rem;
+    }
+
+    .PriceListItem-value {
+        -webkit-align-items: center;
+        align-items: center;
+        color: #c62828;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        padding-top: 6pt;
+    }
+
+    .PriceListItem--small .PriceListItem-value {
+        padding-top: 4.5pt;
+    }
+
+    .PriceListItem--small .PriceListItem-value {
+        padding-top: 4.5pt;
+    }
+
+    .PriceListItem-value span {
+        font-size: 4.5em;
+        font-weight: 900;
+        line-height: 1;
+    }
+
+    .PriceListItem--small .PriceListItem-value span {
+        font-size: 3.75em;
+    }
+
+    .PriceListItem--small .PriceListItem-value span {
+        font-size: 3em;
+    }
+
+    .PriceListItem-info {
+        color: #ffffff;
+        left: 0;
+        position: absolute;
+        padding-top: 1pt;
+        text-align: center;
+        top: 100%;
+        width: 100%;
+    }
+
+    .PriceListItem-info span {
+        font-size: 1.125em;
+        font-weight: 400;
+    }
+
+    .PriceListItem--small .PriceListItem-info span {
+        font-size: 1em;
+        font-weight: 400;
+    }
+
+    .PriceListItem--small .PriceListItem-info span {
+        font-size: .875em;
+    }
+
+    .PriceListItem-info strong {
+        font-weight: 900;
+    }
+
+</style>
+
+<style>
+
+    .Header-deliveryInfo {
+        width: 100%;
+    }
+
+    .DeliveryInfo {
+        -webkit-align-items: center;
+        align-items: center;
+        color: #ffffff;
+        font-family: "program-narrow", sans-serif;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: nowrap;
+        -webkit-justify-content: center;
+        justify-content: center;
+        flex-flow: nowrap;
+        margin-bottom: 1em;
+        width: 100%;
+    }
+
+    .DeliveryInfo h2 {
+        font-size: 1.5em;
+        line-height: 1;
+        margin-right: .5rem;
+        text-transform: uppercase;
+    }
+
+    .DeliveryInfo a {
+        margin-right: .5rem;
+    }
+
+    .DeliveryInfo:last-child {
+        margin-right: 5em;
+    }
+
+    .DeliveryInfo span {
+        font-size: 1.5em;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    /* icon */
+    .DeliveryInfo span.icon {
+        color: #00964B;
+        font-size: 1em;
+        line-height: 0;
+        margin-right: 0pt;
+    }
+
+    /* icon */
+    .DeliveryInfo span.icon:before {
+        -webkit-transform: scale(.625);
+        -moz-transform: scale(.625);
+        -ms-transform: scale(.625);
+        -o-transform: scale(.625);
+        transform: scale(.625);
+        margin: 0;
+    }
+
+    .DeliveryInfo img.icon {
+        display: block;
+        height: .875em;
+        width: .875em;
+        margin-bottom: 3pt;
+        margin-right: 3pt;
+    }
+
+    .DeliveryInfo-whatsApp {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+
+</style>
+
+<body class="grey-100">
+
+<header class="Header">
+
+    <div class="Header-background red-900"></div>
+
+    <div class="Header-inner container">
+
+        <div class="Header-logo">
+
+            <img src="dist/img/DuLagoFacebookSocialProfile-circle.png" alt="Du Lago Logo">
+
+        </div>
+
+        <div class="Header-todayMenu">
+
+            <div id="todayMenu" class="TodayMenu">
+
+                <div class="TodayMenu-header">
+
+                    <h2>Cardápio do dia</h2>
+
+                    <div class="TodayMenu-date">
+
+                        <span>Ter, 20 de junho</span>
+
+                    </div>
+
+                </div>
+
+                <div id="todayMenuList" class="TodayMenu-list"></div>
+
+            </div>
+
+        </div>
+
+        <div class="Header-priceList">
+
+            <div class="PriceList">
+
+                <!--<h2>Preços pensados para a sua economia:</h2>-->
+
+                <div class="PriceList-list">
+
+                    <div class="PriceListItem PriceListItem--small">
+
+                        <div class="PriceListItem-value">
+
+                            <span>7</span>
+
+                        </div>
+
+                        <div class="PriceListItem-info">
+
+                            <span><strong>PP</strong> 375g</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="PriceListItem PriceListItem--small">
+
+                        <div class="PriceListItem-value">
+
+                            <span>8</span>
+
+                        </div>
+
+                        <div class="PriceListItem-info">
+
+                            <span><strong>P</strong> 500g</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="PriceListItem PriceListItem--small">
+
+                        <div class="PriceListItem-value">
+
+                            <span>10</span>
+
+                        </div>
+
+                        <div class="PriceListItem-info">
+
+                            <span><strong>M</strong> 700g</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="PriceListItem PriceListItem--small">
+
+                        <div class="PriceListItem-value">
+
+                            <span>12</span>
+
+                        </div>
+
+                        <div class="PriceListItem-info">
+
+                            <span><strong>G</strong> 900g</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="Header-deliveryInfo">
+
+            <div class="DeliveryInfo">
+
+                <h2>Telentregas</h2>
+
+                <a class="DeliveryInfo-phone">
+
+                        <span>3542 0021</span>
+
+                    </a>
+
+                <a class="DeliveryInfo-whatsApp">
+
+                    <img src="dist/img/whatsapp-logo.png" alt="WhatsApp Logo" class="icon">
+                    <span>43 9176 4248</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+    authDomain: "dulago-com-br.firebaseapp.com",
+    databaseURL: "https://dulago-com-br.firebaseio.com",
+    projectId: "dulago-com-br",
+    storageBucket: "dulago-com-br.appspot.com",
+    messagingSenderId: "265386755560"
+  };
+  firebase.initializeApp(config);
+</script>
 
 <script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-	ga('create', 'UA-90043433-1', 'auto');
-	ga('send', 'pageview');
+    var todayMenu = {};
+
+    todayMenu.data = {
+      date: '2017-06-01',
+      weekDay: 'Quinta',
+      dateTitle: 'Qui, 12 de Junho',
+      items: [
+        {
+          itemTitle: 'Arroz',
+          fontSize: 1
+        },
+        {
+          itemTitle: 'Feijão',
+          fontSize: .875
+        },
+        {
+          itemTitle: 'Macarronada',
+          fontSize: 1.375
+        },
+        {
+          itemTitle: 'Panquecas',
+          fontSize: 1.5
+        },
+        {
+          itemTitle: 'Carne de panela com batatas',
+          fontSize: 1.125
+        },
+        {
+          itemTitle: 'Refogado',
+          fontSize: .8
+        },
+        {
+          itemTitle: 'Salada',
+          fontSize: 1.125
+        }
+      ]
+    };
+
+    var todayMenuListElement = document.getElementById('todayMenuList');
+
+    for (var i = 0; i < todayMenu.data.items.length; i++) {
+
+      var todayMenuItem = todayMenu.data.items[i];
+
+      var element = document.createElement('li');
+      element.className = 'TodayMenuItem';
+
+      var nameElement = document.createElement('span');
+      nameElement.className = 'TodayMenuItem-name';
+
+      var nameTextElement = document.createElement('span');
+      nameTextElement.innerText = todayMenuItem.itemTitle;
+      nameTextElement.style.fontSize = ( todayMenuItem.fontSize * 100 ) + '%';
+
+      nameElement.appendChild(nameTextElement);
+
+      element.appendChild(nameElement);
+
+      todayMenuListElement.appendChild(element);
+
+    }
+
+</script>
+
+<script>
+
+    var database = firebase.database().ref('/');
+    var todayMenusRef = firebase.database().ref('menus/');
+
+    /*
+    * todayMenu
+    *   menus
+    *
+    *
+    * */
+
+    todayMenusRef.set(null);
+    todayMenusRef.push(todayMenu.data);
+
+    database.on('value', function (snap) {
+      console.log(snap.val());
+    });
+
+    menusRef.on('value', function (snap) {
+      console.log(snap.val());
+    })
 
 </script>
 

@@ -1,0 +1,7 @@
+{
+  "short_name": "Banco Du Lago",
+  "name": "Marmitaria Du Lago App",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait"
+}

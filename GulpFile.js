@@ -165,7 +165,8 @@ gulp.task('serve', function () {
 			index: "index.html",
 			routes: {
 				"/home": "./index.html"
-			}
+			},
+			ghostMode: false
 		}
 	});
 
