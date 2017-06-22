@@ -515,7 +515,7 @@
 
                     <div class="TodayMenu-date">
 
-                        <span>Ter, 20 de junho</span>
+                        <span id="todayMenuDate_span">Ter, 20 de junho</span>
 
                     </div>
 
@@ -632,7 +632,6 @@
 
 </header>
 
-
 <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -687,54 +686,99 @@
       ]
     };
 
-    var todayMenuListElement = document.getElementById('todayMenuList');
-
-    for (var i = 0; i < todayMenu.data.items.length; i++) {
-
-      var todayMenuItem = todayMenu.data.items[i];
-
-      var element = document.createElement('li');
-      element.className = 'TodayMenuItem';
-
-      var nameElement = document.createElement('span');
-      nameElement.className = 'TodayMenuItem-name';
-
-      var nameTextElement = document.createElement('span');
-      nameTextElement.innerText = todayMenuItem.itemTitle;
-      nameTextElement.style.fontSize = ( todayMenuItem.fontSize * 100 ) + '%';
-
-      nameElement.appendChild(nameTextElement);
-
-      element.appendChild(nameElement);
-
-      todayMenuListElement.appendChild(element);
-
-    }
-
 </script>
 
 <script>
 
-    var database = firebase.database().ref('/');
-    var todayMenusRef = firebase.database().ref('menus/');
+  var todayMenuListElement = document.getElementById('todayMenuList');
 
-    /*
-    * todayMenu
-    *   menus
-    *
-    *
-    * */
+//  for (var i = 0; i < todayMenu.data.items.length; i++) {
+//
+//    var todayMenuItem = todayMenu.data.items[i];
+//
+//    var element = document.createElement('li');
+//    element.className = 'TodayMenuItem';
+//
+//    var nameElement = document.createElement('span');
+//    nameElement.className = 'TodayMenuItem-name';
+//
+//    var nameTextElement = document.createElement('span');
+//    nameTextElement.innerText = todayMenuItem.itemTitle;
+//    nameTextElement.style.fontSize = ( todayMenuItem.fontSize * 100 ) + '%';
+//
+//    nameElement.appendChild(nameTextElement);
+//
+//    element.appendChild(nameElement);
+//
+//    todayMenuListElement.appendChild(element);
+//
+//  }
 
-    todayMenusRef.set(null);
-    todayMenusRef.push(todayMenu.data);
+  var database = firebase.database().ref('/');
+  var todayMenuRef = firebase.database().ref('todayMenu/');
+  var menusRef = firebase.database().ref('todayMenu/menus/');
 
-    database.on('value', function (snap) {
-      console.log(snap.val());
+  todayMenuRef.child('activeMenu').on('value', function (snap) {
+
+    var activeMenuKey = snap.val();
+    var activeMenuRef = menusRef.child(activeMenuKey);
+    todayMenuListElement.innerHTML = '';
+
+    activeMenuRef.child('isActive').on('value', function (snap) {
+
+      if (snap.val()) {
+
+        activeMenuRef.child('dateTitle').on('value', function (snap) {
+
+            document.getElementById('todayMenuDate_span').innerText = snap.val();
+
+        });
+
+        activeMenuRef.child('items').on('child_added', function (snap) {
+
+          var menuItemData = snap.val();
+          var menuItemRef = activeMenuRef.child('items/' + snap.key);
+
+          var element = document.createElement('li');
+          element.className = 'TodayMenuItem';
+
+          var nameElement = document.createElement('span');
+          nameElement.className = 'TodayMenuItem-name';
+
+          var nameTextElement = document.createElement('span');
+          nameTextElement.innerText = menuItemData.itemTitle;
+          nameTextElement.style.fontSize = (menuItemData.fontSize * 100 ) + '%';
+          menuItemRef.child('itemTitle').on('value', function (snap) {
+
+            nameTextElement.innerText = snap.val();
+
+          });
+          menuItemRef.child('fontSize').on('value', function (snap) {
+
+            console.log(( snap.val() * 100 ) + '%');
+            nameTextElement.style.fontSize = ( snap.val() * 100 ) + '%';
+
+          });
+          nameElement.appendChild(nameTextElement);
+
+          // adiciona o nameElement no
+          element.appendChild(nameElement);
+
+          todayMenuListElement.appendChild(element);
+
+        });
+
+      } else {
+
+        activeMenuRef.child('isActive').off();
+        activeMenuRef.child('dateTitle').off();
+        activeMenuRef.child('items').off();
+
+      }
+
     });
 
-    menusRef.on('value', function (snap) {
-      console.log(snap.val());
-    })
+  });
 
 </script>
 

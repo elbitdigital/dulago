@@ -138,6 +138,20 @@
         width: 100%;
     }
 
+    .Menu-actionPanel {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -webkit-justify-content: flex-end;
+        justify-content: flex-end;
+    }
+
     .Menu input.Menu-dateTitle {
         background: transparent;
         border: none;
@@ -156,7 +170,7 @@
         -ms-user-select: text;
         user-select: text;
         padding: .5rem;
-        width: 11em;
+        width: 10em;
     }
 
     .Menu-list {
@@ -266,23 +280,21 @@
 
     .MenuItem input.MenuItem-fontSize {
         /*background-color: #bdbdbd;*/
-        max-width: 3.75rem;
+        width: 6rem;
     }
 
     .MenuItem input.MenuItem-itemTitle {
-        /*background-color: #fafafa;*/
-        min-width: 10rem;
-        max-width: 16rem;
+        width: 8rem;
     }
 
-    .MenuItem-dropButton {
+    .Menu-actionButton {
         -webkit-align-items: center;
         align-items: center;
         background: none;
         background-color: transparent;
         border-radius: 50%;
         border: none;
-        color: #d50000;
+        color: #424242;
         display: -webkit-box;
         display: -moz-box;
         display: -ms-flexbox;
@@ -299,9 +311,19 @@
         width: 2.25em;
     }
 
-    .MenuItem-dropButton:hover,
-    .MenuItem-dropButton:focus {
+    .MenuItem-actionButton:hover,
+    .MenuItem-actionButton:focus {
         background-color: #e0e0e0;
+    }
+
+    .Menu.is-active .Menu-activeMenuButton {
+        background-color: #00c853;
+        /*border-color: #00c853;*/
+        color: #ffffff;
+    }
+
+    .Menu-dropButton {
+        color: #d50000;
     }
 
     .MenuItem-dropButton span {
@@ -334,6 +356,18 @@
 
 </main>
 
+<datalist id="tickmarks">
+    <option value=".75">
+    <option value=".85">
+    <option value="1" label="1">
+    <option value="1.15">
+    <option value="1.25">
+    <option value="1.3">
+    <option value="1.5">
+    <option value="1.6">
+    <option value="1.75" label="1.75">
+</datalist>
+
 <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -354,9 +388,9 @@
 
   // default menu data
   todayMenu.data = {
-    date: '2017-06-01',
-    weekDay: 'Quinta',
-    dateTitle: 'Seg, 1 de Junho',
+    date: '',
+    weekDay: '',
+    dateTitle: '',
     items: [
       {
         itemTitle: 'Arroz',
@@ -368,15 +402,15 @@
       },
       {
         itemTitle: '',
-        fontSize: 1
+        fontSize: 1.35
       },
       {
         itemTitle: '',
-        fontSize: 1
+        fontSize: 1.35
       },
       {
         itemTitle: '',
-        fontSize: 1
+        fontSize: 1.35
       },
       {
         itemTitle: 'Refogado',
@@ -408,6 +442,16 @@
     menuElement.className = 'Menu';
     menuElement.dataset.menuReferenceKey = key;
 
+    // listener para o estado 'isActive'
+    menuRef.child('isActive').on('value', function (snap) {
+
+      if (snap.val())
+        menuElement.classList.add('is-active');
+      else
+        menuElement.classList.remove('is-active');
+
+    });
+
     // cria o header do menu (com titulo e botões de ação)
     var menuHeaderElement = document.createElement('div');
     menuHeaderElement.className = 'Menu-header';
@@ -415,6 +459,7 @@
     var dateTitleElement = document.createElement('input');
     dateTitleElement.className = 'Menu-dateTitle';
     dateTitleElement.type = 'text';
+    dateTitleElement.placeholder = 'Data do menu';
     dateTitleElement.value = data.dateTitle;
     dateTitleElement.addEventListener('input', function () {
 
@@ -432,20 +477,36 @@
       dateTitleElement.innerText = snap.val();
 
     });
+    menuHeaderElement.appendChild(dateTitleElement);
 
+    // lugar para colocar painel de botões de ação
+    var actionPanelElement = document.createElement('div');
+    actionPanelElement.className = 'Menu-actionPanel';
+    menuHeaderElement.appendChild(actionPanelElement);
+
+    // botão de ativar menu (manter ativo)
+    var activeMenuButtonElement = document.createElement('button');
+    activeMenuButtonElement.innerHTML = '<span class="icon-ok"></span>';
+    activeMenuButtonElement.dataset.menuReferenceKey = key;
+    activeMenuButtonElement.className = 'Menu-actionButton Menu-activeMenuButton';
+    activeMenuButtonElement.onclick = function () {
+
+      activeMenu(this.dataset.menuReferenceKey);
+
+    };
+    actionPanelElement.appendChild(activeMenuButtonElement);
+
+    // botão de excluir menu
     var dropButtonElement = document.createElement('button');
     dropButtonElement.innerHTML = '<span class="icon-trash"></span>';
     dropButtonElement.dataset.menuReferenceKey = key;
-    dropButtonElement.className = 'Menu-dropButton';
+    dropButtonElement.className = 'Menu-actionButton Menu-dropButton';
     dropButtonElement.onclick = function () {
 
       dropMenu(this.dataset.menuReferenceKey);
 
     };
-
-    // coloca o botão e o titulo dentro do elemento do header
-    menuHeaderElement.appendChild(dateTitleElement);
-    menuHeaderElement.appendChild(dropButtonElement);
+    actionPanelElement.appendChild(dropButtonElement);
 
     // coloca o header dentro do elemento menu
     menuElement.appendChild(menuHeaderElement);
@@ -492,8 +553,11 @@
       // tamanho da fonte do item
       var menuItemFontSizeInputFieldElement = document.createElement('input');
       menuItemFontSizeInputFieldElement.className = 'MenuItem-fontSize';
-      menuItemFontSizeInputFieldElement.type = 'number';
+      menuItemFontSizeInputFieldElement.type = 'range';
+      menuItemFontSizeInputFieldElement.min = .75;
+      menuItemFontSizeInputFieldElement.max = 1.75;
       menuItemFontSizeInputFieldElement.step = .05;
+      menuItemFontSizeInputFieldElement.setAttribute('list', 'tickmarks');
       menuItemFontSizeInputFieldElement.value = menuItemData.fontSize || 0;
       menuItemFontSizeInputFieldElement.addEventListener('input', function () {
 
@@ -572,7 +636,8 @@
     var key = menusRef.push({
       date:todayMenu.data.date,
       weekDay:todayMenu.data.weekDay,
-      dateTitle:todayMenu.data.dateTitle
+      dateTitle:todayMenu.data.dateTitle,
+      isActive: false
     }).key;
 
     for (var i = 0; i < todayMenu.data.items.length; i++)
@@ -584,6 +649,23 @@
 
     console.log('menu ' + key + ' removido!');
     menusRef.child(key).set(null);
+
+  }
+
+  function activeMenu(key) {
+
+    var newActiveMenuKey = key;
+    menusRef.child(newActiveMenuKey + '/isActive').set(true);
+
+    todayMenuRef.child('activeMenu').once('value', function (snap) {
+
+      var currentActiveMenuKey = snap.val();
+      todayMenuRef.child('activeMenu').set(newActiveMenuKey);
+
+      if (currentActiveMenuKey != newActiveMenuKey)
+        menusRef.child(currentActiveMenuKey + '/isActive').set(false);
+
+    });
 
   }
 
