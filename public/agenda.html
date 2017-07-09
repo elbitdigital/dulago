@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Marmitaria Du Lago</title>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<meta name="theme-color" content="#b71c1c"/>
+<script src="https://use.typekit.net/dxo6usq.js"></script>
+<script>
+
+  try {
+    Typekit.load({
+      loading: function () {
+        // Javascript to execute when fonts start loading
+        console.log('loading');
+        document.documentElement.classList.add('is-loading');
+      },
+      active: function () {
+        // Javascript to execute when fonts become active
+        console.log('active');
+        document.documentElement.classList.remove('is-loading');
+        document.documentElement.classList.add('is-active');
+      },
+      inactive: function () {
+        // Javascript to execute when fonts become inactive
+        console.log('inactive');
+        document.documentElement.classList.remove('is-loading');
+      }
+    })
+  } catch (e) {
+  }
+
+</script>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<link rel="stylesheet" href="dist/css/dulago.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+    body {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        -webkit-justify-content: center;
+        justify-content: center;
+    }
+
+</style>
+
+<style>
+
+    .Header {
+        min-width: 18em;
+        max-width: 24em;
+        padding: .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .Header-inner {
+        background-color: #fff;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        padding: 1em;
+        position: relative;
+        width: 100%;
+    }
+
+</style>
+
+<style>
+
+    .Button {
+        cursor: pointer;
+    }
+
+</style>
+
+<style>
+
+    .AddressBook {
+        min-width: 18em;
+        max-width: 36em;
+        padding: .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .AddressBook-inner {
+        background-color: #eeeeee;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        padding: 1em;
+        position: relative;
+        width: 100%;
+    }
+
+    .AddressBook-list {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+    }
+
+</style>
+
+<style>
+
+    .Customer {
+        border-bottom: solid 1px #616161;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        padding-bottom: .5em;
+        margin-bottom: 1em;
+    }
+
+    .Customer:last-of-type {
+        border-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .Customer input {
+        border: 0;
+        margin-bottom: .5rem;
+        width: 100%;
+    }
+
+    .Customer input.Customer-customerName {
+        color: #b71c1c;
+        font-size: 1.5em;
+        font-weight: 900;
+    }
+
+    .Consumer-removeButton {
+        margin-bottom: .5em;
+    }
+
+</style>
+
+<body class="grey-100 tk-program-narrow font-red-900">
+
+<header class="Header">
+
+    <div class="Header-inner">
+
+        <h1>A <span class="red-900 font-white">incrível</span> agenda de endereços</h1>
+
+    </div>
+
+</header>
+
+<main id="addressBook" class="AddressBook">
+
+    <div class="AddressBook-inner">
+
+        <div id="addressBookList" class="AddressBook-list"></div>
+
+        <a class="Button" onclick="addNewCustomer();">Cadastrar novo cliente</a>
+
+    </div>
+
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+    authDomain: "dulago-com-br.firebaseapp.com",
+    databaseURL: "https://dulago-com-br.firebaseio.com",
+    projectId: "dulago-com-br",
+    storageBucket: "dulago-com-br.appspot.com",
+    messagingSenderId: "265386755560"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+
+
+    /* firebase references */
+    var database = firebase.database().ref('/');
+    var addressBookRef = firebase.database().ref('addressBook/');
+    var customersRef = addressBookRef.child('customers');
+
+    /* element references */
+    var addressBookListElement = document.getElementById('addressBookList')
+
+
+</script>
+
+<script>
+
+  function addNewCustomer() {
+
+    customersRef.push({
+      customerName: '',
+      street: '',
+      buildingNumber: '',
+      neighborhood: '',
+      reference: ''
+    });
+
+  }
+
+  function buildCustomer(customerReferenceKey, customerData) {
+
+    console.log(customerData);
+
+    var customerRef = customersRef.child(customerReferenceKey);
+
+    var element = document.createElement('div');
+    element.className = 'Customer';
+    element.dataset.customerReferenceKey = customerReferenceKey;
+
+    // CUSTOMER NAME
+    var customerNameElement = document.createElement('input');
+    customerNameElement.placeholder = 'Nome';
+    customerNameElement.className = 'Customer-customerName';
+    customerNameElement.addEventListener('input', function () {
+
+      customerRef.child('customerName').set(this.value);
+
+    });
+    customerRef.child('customerName').on('value', function (snap) {
+
+      if (snap.val() !== customerNameElement.value)
+        customerNameElement.value = snap.val();
+
+    });
+    element.appendChild(customerNameElement);
+
+    // STREET
+    var streetElement = document.createElement('input');
+    streetElement.placeholder = 'Rua';
+    streetElement.className = 'Customer-street';
+    streetElement.addEventListener('input', function () {
+
+      customerRef.child('street').set(this.value);
+
+    });
+    customerRef.child('street').on('value', function (snap) {
+
+      if (snap.val() !== streetElement.value)
+        streetElement.value = snap.val();
+
+    });
+    element.appendChild(streetElement);
+
+    // BUILDING NUMBER
+    var buildingNumberElement = document.createElement('input');
+    buildingNumberElement.placeholder = 'Número';
+    buildingNumberElement.className = 'Customer-buildingNumber';
+    buildingNumberElement.addEventListener('input', function () {
+
+      customerRef.child('buildingNumber').set(this.value);
+
+    });
+    customerRef.child('buildingNumber').on('value', function (snap) {
+
+      if (snap.val() !== buildingNumberElement.value)
+        buildingNumberElement.value = snap.val();
+
+    });
+    element.appendChild(buildingNumberElement);
+
+    // REFERENCE
+    var referenceElement = document.createElement('input');
+    referenceElement.placeholder = 'Referencia';
+    referenceElement.className = 'Customer-reference';
+    referenceElement.addEventListener('input', function () {
+
+      customerRef.child('reference').set(this.value);
+
+    });
+    customerRef.child('reference').on('value', function (snap) {
+
+      if (snap.val() !== referenceElement.value)
+        referenceElement.value = snap.val();
+
+    });
+    element.appendChild(referenceElement);
+
+    // NEIGHBORHOOD
+    var neighborhoodElement = document.createElement('input');
+    neighborhoodElement.placeholder = 'Bairro';
+    neighborhoodElement.className = 'Customer-reference';
+    neighborhoodElement.addEventListener('input', function () {
+
+      customerRef.child('neighborhood').set(this.value);
+
+    });
+    customerRef.child('neighborhood').on('value', function (snap) {
+
+      if (snap.val() !== neighborhoodElement.value)
+        neighborhoodElement.value = snap.val();
+
+    });
+    element.appendChild(neighborhoodElement);
+
+    // REMOVE BUTTON
+    var removeButtonElement = document.createElement('button');
+    removeButtonElement.innerHTML = '<span class="icon-trash"></span>';
+    removeButtonElement.className = 'Customer-removeButton';
+    removeButtonElement.addEventListener('click', function () {
+
+      customerRef.set(null);
+
+    });
+    element.appendChild(removeButtonElement);
+
+    return element;
+
+  }
+
+</script>
+
+<script>
+
+  customersRef.on('child_added', function (snap) {
+
+    addressBookListElement.appendChild(buildCustomer(snap.key, snap.val()));
+
+  });
+
+  customersRef.on('child_removed', function (snap) {
+
+    console.log(snap.key);
+    var element = document.querySelector('.Customer[data-customer-reference-key=' + snap.key + ']');
+    element.parentElement.removeChild(element);
+
+  });
+
+</script>
+
+</body>
+
+</html>

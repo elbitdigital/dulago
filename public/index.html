@@ -8,26 +8,26 @@
 <script src="https://use.typekit.net/dxo6usq.js"></script>
 <script>
 
-    try {
-        Typekit.load({
-            loading: function() {
-                // Javascript to execute when fonts start loading
-                console.log('loading');
-                document.documentElement.classList.add('is-loading');
-            },
-            active: function() {
-                // Javascript to execute when fonts become active
-                console.log('active');
-                document.documentElement.classList.remove('is-loading');
-                document.documentElement.classList.add('is-active');
-            },
-            inactive: function() {
-                // Javascript to execute when fonts become inactive
-                console.log('inactive');
-                document.documentElement.classList.remove('is-loading');
-            }
-        })
-    } catch(e) {}
+  try {
+    Typekit.load({
+      loading: function() {
+        // Javascript to execute when fonts start loading
+        console.log('loading');
+        document.documentElement.classList.add('is-loading');
+      },
+      active: function() {
+        // Javascript to execute when fonts become active
+        console.log('active');
+        document.documentElement.classList.remove('is-loading');
+        document.documentElement.classList.add('is-active');
+      },
+      inactive: function() {
+        // Javascript to execute when fonts become inactive
+        console.log('inactive');
+        document.documentElement.classList.remove('is-loading');
+      }
+    })
+  } catch(e) {}
 
 </script>
 <script src="dist/js/villa.min.js"></script>
@@ -222,7 +222,7 @@
         text-transform: uppercase;
         text-align: center;
     }
-    
+
     .TodayMenuItem-name span {
         text-shadow: 2px 2px 4px rgba(16, 16, 16, .36);
     }
@@ -613,9 +613,9 @@
 
                 <a class="DeliveryInfo-phone">
 
-                        <span>3542 0021</span>
+                    <span>3542 0021</span>
 
-                    </a>
+                </a>
 
                 <a class="DeliveryInfo-whatsApp">
 
@@ -632,7 +632,7 @@
 
 </header>
 
-<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
 <script>
   // Initialize Firebase
   var config = {
@@ -648,43 +648,43 @@
 
 <script>
 
-    var todayMenu = {};
+  var todayMenu = {};
 
-    todayMenu.data = {
-      date: '2017-06-01',
-      weekDay: 'Quinta',
-      dateTitle: 'Qui, 12 de Junho',
-      items: [
-        {
-          itemTitle: 'Arroz',
-          fontSize: 1
-        },
-        {
-          itemTitle: 'Feijão',
-          fontSize: .875
-        },
-        {
-          itemTitle: 'Macarronada',
-          fontSize: 1.375
-        },
-        {
-          itemTitle: 'Panquecas',
-          fontSize: 1.5
-        },
-        {
-          itemTitle: 'Carne de panela com batatas',
-          fontSize: 1.125
-        },
-        {
-          itemTitle: 'Refogado',
-          fontSize: .8
-        },
-        {
-          itemTitle: 'Salada',
-          fontSize: 1.125
-        }
-      ]
-    };
+  todayMenu.data = {
+    date: '2017-06-01',
+    weekDay: 'Quinta',
+    dateTitle: 'Qui, 12 de Junho',
+    items: [
+      {
+        itemTitle: 'Arroz',
+        fontSize: 1
+      },
+      {
+        itemTitle: 'Feijão',
+        fontSize: .875
+      },
+      {
+        itemTitle: 'Macarronada',
+        fontSize: 1.375
+      },
+      {
+        itemTitle: 'Panquecas',
+        fontSize: 1.5
+      },
+      {
+        itemTitle: 'Carne de panela com batatas',
+        fontSize: 1.125
+      },
+      {
+        itemTitle: 'Refogado',
+        fontSize: .8
+      },
+      {
+        itemTitle: 'Salada',
+        fontSize: 1.125
+      }
+    ]
+  };
 
 </script>
 
@@ -692,27 +692,27 @@
 
   var todayMenuListElement = document.getElementById('todayMenuList');
 
-//  for (var i = 0; i < todayMenu.data.items.length; i++) {
-//
-//    var todayMenuItem = todayMenu.data.items[i];
-//
-//    var element = document.createElement('li');
-//    element.className = 'TodayMenuItem';
-//
-//    var nameElement = document.createElement('span');
-//    nameElement.className = 'TodayMenuItem-name';
-//
-//    var nameTextElement = document.createElement('span');
-//    nameTextElement.innerText = todayMenuItem.itemTitle;
-//    nameTextElement.style.fontSize = ( todayMenuItem.fontSize * 100 ) + '%';
-//
-//    nameElement.appendChild(nameTextElement);
-//
-//    element.appendChild(nameElement);
-//
-//    todayMenuListElement.appendChild(element);
-//
-//  }
+  //  for (var i = 0; i < todayMenu.data.items.length; i++) {
+  //
+  //    var todayMenuItem = todayMenu.data.items[i];
+  //
+  //    var element = document.createElement('li');
+  //    element.className = 'TodayMenuItem';
+  //
+  //    var nameElement = document.createElement('span');
+  //    nameElement.className = 'TodayMenuItem-name';
+  //
+  //    var nameTextElement = document.createElement('span');
+  //    nameTextElement.innerText = todayMenuItem.itemTitle;
+  //    nameTextElement.style.fontSize = ( todayMenuItem.fontSize * 100 ) + '%';
+  //
+  //    nameElement.appendChild(nameTextElement);
+  //
+  //    element.appendChild(nameElement);
+  //
+  //    todayMenuListElement.appendChild(element);
+  //
+  //  }
 
   var database = firebase.database().ref('/');
   var todayMenuRef = firebase.database().ref('todayMenu/');
@@ -730,7 +730,7 @@
 
         activeMenuRef.child('dateTitle').on('value', function (snap) {
 
-            document.getElementById('todayMenuDate_span').innerText = snap.val();
+          document.getElementById('todayMenuDate_span').innerText = snap.val();
 
         });
 
@@ -755,7 +755,6 @@
           });
           menuItemRef.child('fontSize').on('value', function (snap) {
 
-            console.log(( snap.val() * 100 ) + '%');
             nameTextElement.style.fontSize = ( snap.val() * 100 ) + '%';
 
           });
