@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Geladão - Marmitaria Du Lago</title>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<meta name="theme-color" content="#0D47A1"/>
+<link rel="manifest" href="/manifest.json">
+<script src="https://use.typekit.net/dxo6usq.js"></script>
+<script>
+
+  try {
+    Typekit.load({
+      loading: function () {
+        // Javascript to execute when fonts start loading
+        console.log('loading');
+        document.documentElement.classList.add('is-loading');
+      },
+      active: function () {
+        // Javascript to execute when fonts become active
+        console.log('active');
+        document.documentElement.classList.remove('is-loading');
+        document.documentElement.classList.add('is-active');
+      },
+      inactive: function () {
+        // Javascript to execute when fonts become inactive
+        console.log('inactive');
+        document.documentElement.classList.remove('is-loading');
+      }
+    })
+  } catch (e) {
+  }
+
+</script>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<link rel="stylesheet" href="dist/css/dulago.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+    body {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        -webkit-justify-content: center;
+        justify-content: center;
+    }
+
+</style>
+
+<style>
+
+    .Header {
+        min-width: 18em;
+        max-width: 24em;
+        padding: .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .Header-inner {
+        background-color: #fff;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        padding: 1em;
+        position: relative;
+        width: 100%;
+    }
+
+</style>
+
+<style>
+
+    .Button {
+        cursor: pointer;
+    }
+
+</style>
+
+<style>
+
+    .Reserves {
+        min-width: 18em;
+        max-width: 36em;
+        padding: .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .Reserves-inner {
+        background-color: #eeeeee;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        padding: 1em .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .Reserves-list {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+    }
+
+</style>
+
+<style>
+
+    .ReserveItem {
+        background-color: #ffffff;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        padding: .5em .5em;
+        margin-bottom: .75em;
+    }
+
+    .ReserveItem input {
+        border: solid 1px #1E88E5;
+        border-radius: 2px;
+        background-color: transparent;
+        color: #2196F3;
+        height: 2.25rem;
+        padding: 0 .5rem;
+        margin-bottom: .5rem;
+        width: 100%;
+    }
+
+    .ReserveItem input.ReserveItem-consumerName {
+        font-weight: 900;
+        font-size: 1.125em;
+        margin-right: .5rem;
+        flex: 7;
+    }
+
+    .ReserveItem input.ReserveItem-deliveryDate {
+        flex: 2;
+    }
+
+    .ReserveItem button {
+        border: none;
+        border-radius: 2px;
+        background-color: #eeeeee;
+        font-weight: 900;
+        height: 2.25rem;
+        padding: 0 .5rem;
+        text-transform: uppercase;
+        -webkit-transition: background .3s;
+        -moz-transition: background .3s;
+        -ms-transition: background .3s;
+        -o-transition: background .3s;
+        transition: background .3s;
+        margin-bottom: .5rem;
+        width: 100%;
+    }
+
+    .ReserveItem button.ReserveItem-deleteButton {
+        color: #ffffff;
+        background-color: #F44336;
+    }
+
+    .ReserveItem button.ReserveItem-deleteButton:hover {
+        background-color: #EF5350;
+    }
+
+    .ReserveItem button.ReserveItem-deleteButton:focus,
+    .ReserveItem button.ReserveItem-deleteButton:active {
+        background-color: #D32F2F;
+    }
+
+    .ReserveItem *:last-child {
+        margin-bottom: 0;
+    }
+
+    .ReserveItem-infoContainer {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row;
+        flex-flow: row;
+    }
+
+    .ReserveItem-productList {
+        width: 100%;
+    }
+
+</style>
+
+<style>
+
+    .ProductList {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+    }
+
+    .ProductItem {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row;
+        flex-flow: row;
+        width: 100%;
+    }
+
+    .ProductItem input.ProductItem-productName {
+        margin-right: .5rem;
+        flex: 5;
+    }
+
+    .ProductItem input.ProductItem-quantity {
+        margin-right: .5rem;
+        max-width: 6em;
+        flex: 2;
+    }
+
+    .ProductItem button.ProductItem-deleteButton {
+        color: #ffffff;
+        background-color: #F44336;
+        width: 2.25rem;
+    }
+
+    .ProductItem button.ProductItem-deleteButton:hover {
+        background-color: #EF5350;
+    }
+
+    .ProductItem button.ProductItem-deleteButton:focus,
+    .ProductItem button.ProductItem-deleteButton:active {
+        background-color: #D32F2F;
+    }
+
+</style>
+
+<body class="grey-100 tk-program-narrow font-blue-900">
+
+<header class="Header">
+
+    <div class="Header-inner">
+
+        <h1>O <span class="blue-900 font-white">incrível</span> sistema de reservas de <u>GELADÃO</u></h1>
+
+    </div>
+
+</header>
+
+<main id="reserves" class="Reserves">
+
+    <div class="Reserves-inner">
+
+        <div id="reservesList" class="Reserves-list"></div>
+
+        <a class="Button" onclick="addNewReserve();">Criar nova reserva</a>
+
+    </div>
+
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+    authDomain: "dulago-com-br.firebaseapp.com",
+    databaseURL: "https://dulago-com-br.firebaseio.com",
+    projectId: "dulago-com-br",
+    storageBucket: "dulago-com-br.appspot.com",
+    messagingSenderId: "265386755560"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+
+  /* firebase references */
+  var database = firebase.database().ref('/');
+  var reservesRef = firebase.database().ref('reserves/');
+
+  /* element references */
+  var reservesListElement = document.getElementById('reservesList')
+
+</script>
+
+<script>
+
+  var date = new Date();
+  var dateString = date.toISOString().substring(0, 10);
+
+  reservesRef.on('child_added', function (reserve) {
+
+    var data = reserve.val();
+    var key = reserve.key;
+    var ref = reservesRef.child(key);
+
+    var element = document.createElement('div');
+    element.className = 'ReserveItem';
+    element.dataset.reserveReferenceKey = key;
+
+    // Reserve Info Container
+    var reserveItemInfoContainerElement = document.createElement('div');
+    reserveItemInfoContainerElement.className = 'ReserveItem-infoContainer';
+    element.appendChild(reserveItemInfoContainerElement);
+
+    // Consumer Name
+    var consumerNameElement = document.createElement('input');
+    consumerNameElement.type = 'text';
+    consumerNameElement.className = 'ReserveItem-consumerName';
+    consumerNameElement.placeholder = 'Nome do Cliente';
+    consumerNameElement.addEventListener('input', function () {
+
+      ref.child('consumerName').set(this.value);
+
+    });
+    consumerNameElement.addEventListener('blur', function () {
+
+      this.value = this.value.replace(/\s+$/, '');
+      ref.child('consumerName').set(this.value);
+
+    });
+    ref.child('consumerName').on('value', function (data) {
+
+      if (consumerNameElement.value !== data.val())
+        consumerNameElement.value = data.val();
+
+    });
+    reserveItemInfoContainerElement.appendChild(consumerNameElement);
+
+    // Delivery Date
+    var deliveryDateElement = document.createElement('input');
+    deliveryDateElement.type = 'date';
+    deliveryDateElement.value = data.deliveryDate;
+    deliveryDateElement.className = 'ReserveItem-deliveryDate';
+    deliveryDateElement.placeholder = 'Data da Entrega';
+    deliveryDateElement.addEventListener('input', function () {
+
+      ref.child('deliveryDate').set(this.value);
+
+    });
+    ref.child('deliveryDate').on('value', function (data) {
+
+      if (deliveryDateElement.value !== data.val())
+        deliveryDateElement.value = data.val();
+
+    });
+    reserveItemInfoContainerElement.appendChild(deliveryDateElement);
+
+    // Product List Container
+    var productListElement= document.createElement('div');
+    productListElement.className = 'ReserveItem-productList ProductList';
+    element.appendChild(productListElement);
+
+    // Add Product Button
+    var addProductButtonElement = document.createElement('button');
+    addProductButtonElement.className = 'ReserveItem-addProduct';
+    addProductButtonElement.innerText = 'Adicionar Novo Produto';
+    addProductButtonElement.addEventListener('click', function() {
+
+      ref.child('productList').push({
+        productName: '',
+        quantity: 1
+      });
+
+    });
+    element.appendChild(addProductButtonElement);
+
+    ref.child('productList').on('child_added', function(product) {
+
+      var productData = product.val();
+      var productKey = product.key;
+      var productRef = ref.child('productList').child(productKey);
+
+      var productElement = document.createElement('div');
+      productElement.className = 'ProductItem';
+      productElement.dataset.productReferenceKey = productKey;
+
+      // Product Name
+      var productNameElement = document.createElement('input');
+      productNameElement.className = 'ProductItem-productName';
+      productNameElement.placeholder = 'Sabor';
+      productNameElement.addEventListener('input', function () {
+
+        productRef.child('productName').set(this.value);
+
+      });
+      productNameElement.addEventListener('blur', function () {
+
+        this.value = this.value.replace(/\s+$/, '');
+        productRef.child('productName').set(this.value);
+
+      });
+      productRef.child('productName').on('value', function (productName) {
+
+        if (productNameElement.value !== productName.val())
+            productNameElement.value = productName.val();
+
+      });
+      productElement.appendChild(productNameElement);
+
+      // Quantity
+      var quantityElement = document.createElement('input');
+      quantityElement.type = 'number';
+      quantityElement.className = 'ProductItem-quantity';
+      quantityElement.placeholder = 'Qtde';
+      quantityElement.value = productData.quantity;
+      quantityElement.addEventListener('input', function () {
+
+        productRef.child('quantity').set(this.value);
+
+      });
+      quantityElement.addEventListener('focus', function () {
+
+        this.select();
+
+      });
+      productRef.child('quantity').on('value', function (quantity) {
+
+        quantityElement.value = quantity.val();
+
+      });
+      productElement.appendChild(quantityElement);
+
+      // Delete Button
+      var productDeleteButtonElement = document.createElement('button');
+      productDeleteButtonElement.className = 'ProductItem-deleteButton';
+      productDeleteButtonElement.innerHTML = '<span class="icon-trash"></span>';
+      productDeleteButtonElement.addEventListener('click', function() {
+
+        productRef.set(null);
+
+      });
+      productElement.appendChild(productDeleteButtonElement);
+
+      productListElement.appendChild(productElement);
+
+    });
+
+    ref.child('productList').on('child_removed', function(product) {
+
+      var queryElement = document.querySelector('[data-product-reference-key=' + product.key + ']');
+
+      if (queryElement)
+        productListElement.removeChild(queryElement);
+
+    });
+
+    // Delete Button
+    var deleteButtonElement = document.createElement('button');
+    deleteButtonElement.className = 'ReserveItem-deleteButton';
+    deleteButtonElement.innerText = 'Excluir Reserva';
+    deleteButtonElement.addEventListener('click', function() {
+
+      ref.set(null);
+
+    });
+    element.appendChild(deleteButtonElement);
+
+    reservesListElement.appendChild(element);
+
+  });
+
+  reservesRef.on('child_removed', function (reserve) {
+
+    var queryElement = document.querySelector('[data-reserve-reference-key=' + reserve.key + ']');
+
+    if (queryElement)
+        reservesListElement.removeChild(queryElement);
+
+  });
+
+</script>
+
+<script>
+
+  function addNewReserve() {
+
+    var reserveRefKey = reservesRef.push({
+      consumerName: '',
+      productList: {},
+      deliveryDate: dateString
+    }).key;
+
+    // imprime a nova key
+    console.log('uma reserva com a key ' + reserveRefKey + ' foi gerada');
+
+  }
+
+</script>
+
+</body>
+
+</html>

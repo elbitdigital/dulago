@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Meli</title>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+    body {
+        padding: 1rem;
+    }
+
+    input {
+        border: solid 2px #AD1457;
+        border-radius: 4px;
+        color: #AD1457;
+        height: 3.75rem;
+        width: 100%;
+        padding: 0 1rem;
+        font-size: 1.5em;
+        margin-right: 1rem;
+    }
+
+    .LugarDeEntradaDeDados {
+        background-color: #f0f0f0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        margin-bottom: 1rem;
+        position: fixed;
+        bottom: -1rem;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        padding: 1rem;
+    }
+
+    button {
+        border: solid 2px #AD1457;
+        border-radius: 4px;
+        background-color: #AD1457;
+        padding: 1rem;
+        font-weight: 700;
+        font-size: 1.5em;
+        color: #ffffff;
+        height: 3.75rem;
+    }
+
+    .campoDeMensagens {
+        background-color: #eeeeee;
+        border-radius: 4px;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        width: 100%;
+        padding: 1rem;
+        padding-bottom: 0;
+        margin-bottom: 6rem;
+    }
+
+    .campoDeMensagens span {
+        padding: .5rem;
+        background-color: #AD1457;
+        border-radius: 4px;
+        color: #ffffff;
+        margin-bottom: 1rem;
+    }
+
+</style>
+
+
+<body>
+
+<div class="LugarDeEntradaDeDados">
+
+    <input type="text" id="valor" placeholder="Digite o valor aqui" autocomplete="off">
+
+    <button id="botaoDeEnvio">Vai!</button>
+
+</div>
+
+<div id="campoDeMensagens" class="campoDeMensagens"></div>
+
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  const config = {
+    apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+    authDomain: "dulago-com-br.firebaseapp.com",
+    databaseURL: "https://dulago-com-br.firebaseio.com",
+    projectId: "dulago-com-br",
+    storageBucket: "dulago-com-br.appspot.com",
+    messagingSenderId: "265386755560"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+
+  // instancias de referencia de banco
+  const databaseRef = firebase.database();
+  const mensagensRef = databaseRef.ref('messages');
+
+</script>
+
+<script>
+
+    const elementoDoCampoDeTexto = document.getElementById('valor');
+
+</script>
+
+<script>
+
+    const elementoDoBotaoDeEnvio = document.getElementById('botaoDeEnvio');
+    elementoDoBotaoDeEnvio.addEventListener('click', event => {
+
+      mensagensRef.push(elementoDoCampoDeTexto.value);
+      elementoDoCampoDeTexto.value = '';
+
+    });
+
+</script>
+
+<script>
+
+    const elementoDoCampoDeMensagens = document.getElementById('campoDeMensagens');
+    mensagensRef.on('child_added', snap => {
+
+      const element = document.createElement('span');
+      element.innerText = snap.val();
+
+      elementoDoCampoDeMensagens.appendChild(element);
+
+      if (snap.val().toLowerCase() === 'banana') {
+
+        alert('A PALAVRA CHAVE FOI ACIONADA, DESTRUIR O PLANETA AGORA')
+
+      }
+
+    });
+
+</script>
+
+</body>
+
+</html>

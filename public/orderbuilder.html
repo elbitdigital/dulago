@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Pedidos - Marmitaria Du Lago</title>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<meta name="theme-color" content="#B71C1C"/>
+<link rel="manifest" href="/manifest.json">
+<!--<script src="https://use.typekit.net/dxo6usq.js"></script>-->
+<script>
+
+  try {
+    Typekit.load({
+      loading: function () {
+        // Javascript to execute when fonts start loading
+        console.log('loading');
+        document.documentElement.classList.add('is-loading');
+      },
+      active: function () {
+        // Javascript to execute when fonts become active
+        console.log('active');
+        document.documentElement.classList.remove('is-loading');
+        document.documentElement.classList.add('is-active');
+      },
+      inactive: function () {
+        // Javascript to execute when fonts become inactive
+        console.log('inactive');
+        document.documentElement.classList.remove('is-loading');
+      }
+    })
+  } catch (e) {
+  }
+
+</script>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<link rel="stylesheet" href="dist/css/dulago.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+    body {
+        background-color: #ffffff;
+    }
+
+    .CreateOrderButton {
+        outline: none;
+        bottom: 1rem;
+        position: fixed;
+        right: 1rem;
+        height: 4.5rem;
+        width: 4.5rem;
+    }
+
+    .CreateOrderButton-inner {
+        outline: none;
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        height: 100%;
+        position: relative;
+        width: 100%;
+    }
+
+    .CreateOrderButton button {
+        background-color: #00E676;
+        border-radius: 50%;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        height: 3.75rem;
+        outline: none;
+        -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .24);
+        -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, .24);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, .24);
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+        -webkit-transform: scale(.9);
+        -moz-transform: scale(.9);
+        -ms-transform: scale(.9);
+        -o-transform: scale(.9);
+        transform: scale(.9);
+        width: 3.75rem;
+    }
+
+    .CreateOrderButton button:hover,
+    .CreateOrderButton button:focus {
+        background-color: #69F0AE;
+        -webkit-transform: scale(1.05);
+        -moz-transform: scale(1.05);
+        -ms-transform: scale(1.05);
+        -o-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+
+    .CreateOrderButton button:active {
+        background-color: #00C853;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+    }
+
+    .CreateOrderButton button span {
+        font-size: 1.5em;
+    }
+
+</style>
+
+<style>
+
+    .Main {
+        background-color: #eeeeee;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+    }
+
+</style>
+
+<style>
+
+    a.OpeningBox {
+        -webkit-align-items: center;
+        align-items: center;
+        background-color: #ffffff;
+        cursor: default;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        height: 3rem;
+        padding: .5rem 1rem;
+    }
+
+    a.OpeningBox:hover {
+        background-color: #f0f0f0;
+    }
+
+    a.OpeningBox span {
+        font-weight: 700;
+    }
+
+    a.OpeningBox.is-showingOptions {
+        height: 6em;
+    }
+
+</style>
+
+<style>
+
+    .BoxViewer {
+        position: fixed;
+        background-color: #ffffff;
+        width: 100%;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 10000;
+    }
+
+</style>
+
+<style>
+
+    .Order {
+        background-color: #fafafa;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        margin-bottom: 1em;
+    }
+
+    input.Order-consumerName {
+        border: solid 1px #bdbdbd;
+        height: 2.25rem;
+        font-size: 1.125em;
+        font-weight: 600;
+    }
+
+</style>
+
+<style>
+
+    .OrderProduct {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+    }
+
+</style>
+
+<body>
+
+<div class="CreateOrderButton">
+
+    <div class="CreateOrderButton-inner">
+
+        <button onclick="createOpeningBox(this)"><span class="icon-plus"></span></button>
+
+    </div>
+
+</div>
+
+<div id="main" class="Main"></div>
+
+<script src="dist/js/moment.min.js"></script>
+<script src="dist/js/moment-with-locales.min.js"></script>
+
+<script>
+
+  moment.locale('pt-br');
+
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  const config = {
+    apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+    authDomain: "dulago-com-br.firebaseapp.com",
+    databaseURL: "https://dulago-com-br.firebaseio.com",
+    projectId: "dulago-com-br",
+    storageBucket: "dulago-com-br.appspot.com",
+    messagingSenderId: "265386755560"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+
+  // instancias de referencia de banco
+  const databaseRef = firebase.database();
+  const activeBoxRef = databaseRef.ref('activeBox');
+  const ordersRef = databaseRef.ref('orders');
+  const productsRef = databaseRef.ref('products');
+  const boxOpeningsRef = databaseRef.ref('boxOpenings');
+
+</script>
+
+
+<script>
+
+  // instancias de referencia de elemento DOM
+  const globalFadeElement = document.getElementById('globalFade');
+  const mainElement = document.getElementById('main');
+
+</script>
+
+<script>
+
+  function buildBoxViewerElement(boxOpeningRef) {
+
+    boxOpeningRef.child('active').set(true);
+    activeBoxRef.set(boxOpeningRef.key);
+
+    let element = document.createElement('div');
+    element.className = 'BoxViewer';
+
+    // LABEL TITULO DO BOX VIEWER
+    element.appendChild(buildBoxOpeningLabelElement(boxOpeningRef.child('openingTime')));
+
+    // BOTÃO DE FECHAR
+    let closeButtonElement = document.createElement('button');
+    closeButtonElement.innerText = 'fechar';
+    closeButtonElement.addEventListener('click', () => {
+
+      element.innerHTML = null;
+      element.parentNode.removeChild(element);
+      activeBoxRef.set(false);
+      boxOpeningRef.child('active').set(false);
+      boxOpeningRef.child('orders').off();
+
+    });
+    element.appendChild(closeButtonElement);
+
+    // BOTÃO DE ADICIONAR
+    let addOrderButtonElement = document.createElement('button');
+    addOrderButtonElement.innerText = 'criar pedido';
+    addOrderButtonElement.addEventListener('click', () => {
+
+      setTimeout(function () {
+
+        addOrderButtonElement.blur();
+
+      }, 100);
+
+      boxOpeningRef.child('orders').push(createOrder(boxOpeningRef.key));
+
+    });
+    element.appendChild(addOrderButtonElement);
+
+    // BOTÃO DE EXCLUIR
+    let dropOpeningBoxButtonElement = document.createElement('button');
+    dropOpeningBoxButtonElement.innerText = 'excluir caixa';
+    dropOpeningBoxButtonElement.addEventListener('click', () => {
+
+      boxOpeningRef.set(null);
+
+      element.innerHTML = null;
+      element.parentNode.removeChild(element);
+      activeBoxRef.set(false);
+      boxOpeningRef.child('orders').off();
+
+    });
+    element.appendChild(dropOpeningBoxButtonElement);
+
+    boxOpeningRef.child('orders').on('child_added', snap => {
+
+      const orderRef = ordersRef.child(snap.val());
+      element.appendChild(buildOrderElement(orderRef));
+
+    });
+
+    return element;
+
+  }
+
+  function buildBoxOpeningLabelElement(openingTimeRef) {
+
+    const preText = '';
+
+    let element = document.createElement('span');
+    openingTimeRef.on('value', snap => {
+
+      element.innerHTML = preText + moment(snap.val()).format('LL');
+
+//      setInterval(() => element.innerHTML = preText + moment(snap.val()).fromNow(), 10000);
+
+    });
+
+    return element;
+
+  }
+
+  // ORDERNA O ROLE DA LISTA DE ABERTURAS DE CAIXA
+  boxOpeningsRef.orderByChild('openingTime').limitToLast(15).on('child_added', snap => {
+
+    const boxOpeningRef = boxOpeningsRef.child(snap.key);
+    const data = snap.val();
+
+    boxOpeningRef.child('active').set(false);
+
+    let element = document.createElement('a');
+    element.className = 'OpeningBox';
+    element.href = '/abertura/' + boxOpeningRef.key;
+    element.dataset.openingBoxKey = boxOpeningRef.key;
+    element.appendChild(buildBoxOpeningLabelElement(boxOpeningRef.child('openingTime')));
+    element.addEventListener('click', event => {
+      event.preventDefault();
+      document.body.insertBefore(buildBoxViewerElement(boxOpeningRef), document.body.firstElementChild);
+      activeBoxRef.set(boxOpeningRef.key);
+    });
+
+    if (data.isNew) {
+      mainElement.insertBefore(element, mainElement.firstElementChild);
+    } else {
+      mainElement.appendChild(element);
+    }
+
+    boxOpeningRef.child('isNew').set(false);
+
+  });
+
+  boxOpeningsRef.on('child_removed', snap => {
+
+    const element = mainElement.querySelector('[data-opening-box-key=' + snap.key + ']');
+    mainElement.removeChild(element);
+
+  });
+
+</script>
+
+<script>
+
+  // funções globais
+  function createOpeningBox(element) {
+
+    setTimeout(function () {
+
+      element.blur();
+
+    }, 100);
+
+    let currentTime = moment();
+    const currentBoxOpeningRef = boxOpeningsRef.child(boxOpeningsRef.push().key);
+    console.log(currentBoxOpeningRef.key);
+    currentBoxOpeningRef.set({
+      active: false,
+      openingTime: currentTime.format(),
+      isNew: true
+    });
+
+  }
+
+  // funções globais
+  function createOrder(boxOpeningKey) {
+
+    return ordersRef.push({
+      boxOpening: boxOpeningKey || null,
+      orderPriceAmount: 0.00
+    }).key;
+
+  }
+
+  function buildOrderNameFieldElement(orderNameRef) {
+
+    let element = document.createElement('input');
+    element.className = 'Order-consumerName';
+    element.placeholder = 'Nome do Cliente';
+    element.addEventListener('blur', () => {
+
+      element.value = element.value.replace(/\s+$/, '');
+      orderNameRef.set(element.value);
+
+    });
+    orderNameRef.on('value', snap => {
+
+      if (snap.val() !== element.value)
+        element.value = snap.val();
+
+    });
+
+    return element;
+
+  }
+
+  // cria o botão de adicionar produto ao pedido
+  function buildAddProductButtonElement(productRef, orderRef) {
+
+    const orderProductsRef = orderRef.child('products');
+    const orderPriceAmountRef = orderRef.child('orderPriceAmount');
+
+    let productData = {};
+
+    let element = document.createElement('button');
+    element.dataset.productRefKey = productRef.key;
+    // coleta as informações do produto
+    productRef.on('value', function (snap) {
+
+      productData = snap.val();
+      element.innerText = productData.productName;
+
+    });
+    element.addEventListener('click', () => {
+
+      // CRIA E ADICIONA O NOVO PRODUTO AO PEDIDO
+      const orderProductRef = orderProductsRef.push(productData);
+      orderProductRef.update({
+        quantity: 1,
+        product: productRef.key,
+        orderPriceAmount: 0,
+        payment: {
+          changeValue: 0.00
+        }
+      });
+
+      // ATUALIZA O VALOR TOTAL DO PEDIDO
+      orderPriceAmountRef.once('value', snap => {
+
+        const value = snap.val();
+
+        // verifica se é número
+        if (!isNaN(parseFloat(value)) && isFinite(value))
+          orderPriceAmountRef.set(value + productData.productPrice);
+
+      });
+
+    });
+
+    return element;
+
+  }
+
+  // adiciona menu de tipos de marmita dentro do pedido
+  function buildProductPickerElement(orderRef) {
+
+    let element = document.createElement('div');
+    element.className = 'Order-productsMenu';
+    productsRef.on('child_added', function (snap) {
+
+      element.appendChild(buildAddProductButtonElement(productsRef.child(snap.key), orderRef));
+
+    });
+
+    return element;
+
+  }
+
+  // constrói o elemento de item de produto para a lista
+  function buildOrderProductElement(orderProductRef, orderRef) {
+
+    const orderPriceAmountRef = orderRef.child('orderPriceAmount');
+
+    let orderProductData = {};
+
+    let element = document.createElement('div');
+    element.className = 'OrderProduct';
+    element.dataset.orderProductKey = orderProductRef.key;
+
+    let labelElement = document.createElement('span');
+    orderProductRef.on('value', snap => {
+
+      orderProductData = snap.val();
+      labelElement.innerText = snap.val().productName + ' (' + snap.val().productPrice + ')';
+
+    });
+    element.appendChild(labelElement);
+
+    let removeButtonElement = document.createElement('button');
+    removeButtonElement.innerText = 'excluir produto';
+    removeButtonElement.addEventListener('click', () => {
+
+      orderProductRef.off();
+      orderProductRef.set(null);
+
+      // ATUALIZA O VALOR TOTAL DO PEDIDO
+      orderPriceAmountRef.once('value', snap => {
+
+        const value = snap.val() - orderProductData.productPrice;
+
+        if (value < 0)
+          orderPriceAmountRef.set(0);
+        else
+          orderPriceAmountRef.set(value);
+
+      });
+
+
+    });
+
+    element.appendChild(removeButtonElement);
+
+    return element;
+
+  }
+
+  // lista de PRODUTOS do PEDIDO
+  function buildOrderProductListElement(orderProductsRef) {
+
+    let element = document.createElement('div');
+    element.className = 'Order-productsList';
+    orderProductsRef.on('child_added', snap => {
+
+      element.appendChild(buildOrderProductElement(orderProductsRef.child(snap.key), orderProductsRef.parent));
+
+    });
+    orderProductsRef.on('child_removed', snap => {
+
+      const orderProductElement = element.querySelector('[data-order-product-key=' + snap.key + ']');
+      element.removeChild(orderProductElement);
+
+    });
+
+    return element;
+
+  }
+
+  function buildOrderPaymentElement(orderPaymentRef) {
+
+    const orderPaymentChangeValueRef = orderPaymentRef.child('changeValue');
+
+    let intervalDelay = false;
+
+    const element = document.createElement('div');
+    element.className = 'OrderPayment';
+
+    const changeValueFieldElement = document.createElement('input');
+    changeValueFieldElement.placeholder = 'Troco para';
+    changeValueFieldElement.type = 'number';
+    changeValueFieldElement.min = '0.00';
+    changeValueFieldElement.max = '1000.00';
+    changeValueFieldElement.step = '5.00';
+    function update() {
+
+      orderPaymentChangeValueRef.set(parseFloat(changeValueFieldElement.value).toFixed(2));
+
+    }
+    changeValueFieldElement.addEventListener('input', () => {
+
+      if (intervalDelay)
+        clearInterval(intervalDelay);
+      intervalDelay = setInterval(update, 3000);
+
+    });
+    changeValueFieldElement.addEventListener('focus', () => {
+
+      changeValueFieldElement.select();
+      if (intervalDelay)
+          clearInterval(intervalDelay);
+      intervalDelay = setInterval(update, 3000);
+
+    });
+    changeValueFieldElement.addEventListener('blur', () => {
+
+      update();
+      clearInterval(intervalDelay);
+
+    });
+    orderPaymentChangeValueRef.on('value', snap => {
+
+      if (snap.val() !== changeValueFieldElement.value)
+        changeValueFieldElement.value = snap.val();
+
+    });
+    element.appendChild(changeValueFieldElement);
+
+    return element;
+
+  }
+
+  // campo de PREÇO TOTAL do pedido
+  function buildOrderPriceAmountElement(orderPriceAmountRef) {
+
+    let currentOrderPriceAmount = 0;
+
+    const element = document.createElement('span');
+    element.className = 'Order-orderPriceLabel';
+    orderPriceAmountRef.on('value', snap => {
+
+      currentOrderPriceAmount = snap.val();
+      element.innerHTML = '<strong>Total: ' + currentOrderPriceAmount.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) + '</strong>';
+
+    });
+
+    return element;
+
+  }
+
+  // DETALHES do produto, AQUI TEM:
+  // FORMA DE PAGAMENTO
+  function buildOrderDetailsElement(orderRef) {
+
+    const orderProductsRef = orderRef.child('products');
+
+    const element = document.createElement('div');
+    element.className = 'OrderDetails';
+    element.dataset.orderKey = orderRef.key;
+
+    // PREÇO TOTAL DO PEDIDO
+    element.appendChild(buildOrderPriceAmountElement(orderRef.child('orderPriceAmount')));
+    // FORMA DE PAGAMENTO
+    element.appendChild(buildOrderPaymentElement(orderRef.child('payment')));
+
+    // TODO adicionar campo de forma de pagamento
+    // TODO adicionar campo de tipo de entrega com informações sobre (retirar aqui ou entregar, entregador responsável, endereço)
+
+    return element;
+
+  }
+
+  // cria pedido
+  function buildOrderElement(orderRef) {
+
+    let element = document.createElement('div');
+    element.className = 'Order';
+    element.dataset.orderKey = orderRef.key;
+    element.innerHTML = orderRef.key;
+
+    element.appendChild(buildOrderNameFieldElement(orderRef.child('consumerName')));
+    element.appendChild(buildProductPickerElement(orderRef));
+    element.appendChild(buildOrderProductListElement(orderRef.child('products')));
+    element.appendChild(buildOrderDetailsElement(orderRef));
+
+    return element;
+
+  }
+
+</script>
+
+<script>
+
+  // adição de alguns objetos de produto
+  /* productsRef.push({
+     productName: 'Marmita P',
+     productPrice: 8.00,
+     productWeight: 375
+   });
+   productsRef.push({
+     productName: 'Marmita M',
+     productPrice: 10.00,
+     productWeight: 500
+   });
+   productsRef.push({
+     productName: 'Marmita G',
+     productPrice: 12.00,
+     productWeight: 700
+   });
+   productsRef.push({
+     productName: 'Marmita Família',
+     productPrice: 15.00,
+     productWeight: 1000
+   });*/
+
+  // controla a listagem de produtos
+
+</script>
+
+</body>
+
+</html>

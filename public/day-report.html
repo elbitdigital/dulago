@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Day Report</title>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-firestore.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+    authDomain: "dulago-com-br.firebaseapp.com",
+    databaseURL: "https://dulago-com-br.firebaseio.com",
+    projectId: "dulago-com-br",
+    storageBucket: "dulago-com-br.appspot.com",
+    messagingSenderId: "265386755560"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+
+  //  firebase.firestore.;
+  var db = firebase.firestore();
+  firebase.firestore.setLogLevel("error");
+
+</script>
+
+<script>
+
+  db.collection("users").add({
+    first: "Ada",
+    last: "Lovelace",
+    born: 1815
+  })
+  .then(function (docRef) {
+    console.log("Document written with ID: ", docRef.id);
+  })
+  .catch(function (error) {
+    console.error("Error adding document: ", error);
+  });
+  //
+  //  // Add a second document with a generated ID.
+  //  db.collection("users").add({
+  //    first: "Alan",
+  //    middle: "Mathison",
+  //    last: "Turing",
+  //    born: 1912
+  //  })
+  //  .then(function(docRef) {
+  //    console.log('asdfpoaisdfj');
+  //    console.log("Document written with ID: ", docRef.id);
+  //  })
+  //  .catch(function(error) {
+  //    console.error("Error adding document: ", error);
+  //  });
+  //
+  //  db.collection("users").get().then((querySnapshot) => {
+  //    querySnapshot.forEach((doc) => {
+  //      console.log('hahahah');
+  //      console.log(`${doc.id} => ${doc.data()}`);
+  //    });
+  //  });
+
+</script>
+
+</body>
+
+</html>

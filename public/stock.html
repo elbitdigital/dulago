@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Editor - Marmitaria Du Lago</title>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<meta name="theme-color" content="#b71c1c"/>
+<script src="https://use.typekit.net/dxo6usq.js"></script>
+<script>
+
+    try {
+        Typekit.load({
+            loading: function () {
+                // Javascript to execute when fonts start loading
+                console.log('loading');
+                document.documentElement.classList.add('is-loading');
+            },
+            active: function () {
+                // Javascript to execute when fonts become active
+                console.log('active');
+                document.documentElement.classList.remove('is-loading');
+                document.documentElement.classList.add('is-active');
+            },
+            inactive: function () {
+                // Javascript to execute when fonts become inactive
+                console.log('inactive');
+                document.documentElement.classList.remove('is-loading');
+            }
+        })
+    } catch (e) {
+    }
+
+</script>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<link rel="stylesheet" href="dist/css/dulago.min.css"/>
+<!--[if lt IE 9]>
+<!--<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>-->
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+    body {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        -webkit-justify-content: center;
+        justify-content: center;
+    }
+
+</style>
+
+<style>
+
+    .Header {
+        min-width: 18em;
+        max-width: 24em;
+        padding: .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .Header-inner {
+        background-color: #fff;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        padding: 1em;
+        position: relative;
+        width: 100%;
+    }
+
+</style>
+
+<style>
+
+    .Button {
+        cursor: pointer;
+    }
+
+</style>
+
+<style>
+
+    .StockList {
+        min-width: 18em;
+        max-width: 36em;
+        padding: .5em;
+        position: relative;
+        width: 100%;
+    }
+
+    .StockList-inner {
+        background-color: #eeeeee;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .08);
+        padding: 1em;
+        position: relative;
+        width: 100%;
+    }
+
+</style>
+
+<body class="grey-100 tk-program-narrow font-red-900">
+
+<header class="Header">
+
+    <div class="Header-inner">
+
+        <h1>O <span class="red-900 font-white">admirável</span> gerenciador de estoque</h1>
+
+    </div>
+
+</header>
+
+<main id="stockList" class="StockList">
+
+    <div id="stockList" class="StockList-inner">
+
+        <a class="Button" onclick="addNewStockItem();">Adicionar novo item</a>
+
+        <ul id="stockList_list" class="StockList-list"></ul>
+
+    </div>
+
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyD-oJ2bifB4i3eq5XysEkkW34otJuuz1xE",
+        authDomain: "dulago-com-br.firebaseapp.com",
+        databaseURL: "https://dulago-com-br.firebaseio.com",
+        projectId: "dulago-com-br",
+        storageBucket: "dulago-com-br.appspot.com",
+        messagingSenderId: "265386755560"
+    };
+    firebase.initializeApp(config);
+</script>
+
+<script>
+
+    const databaseRef = firebase.database();
+    const stockRef = databaseRef.ref('stock');
+    const stockItemsRef = databaseRef.ref('stockItems');
+
+</script>
+
+<script>
+
+    let stockList = {
+        element: document.getElementById('stockList'),
+        listElement: document.getElementById('stockList_list')
+    };
+
+</script>
+
+<script>
+
+    function addNewStockItem() {
+
+        stockItemsRef.push({
+            isNew: true
+        });
+
+    }
+
+    function buildStockItemElement(stockItemRef) {
+
+        const element = document.createElement('div');
+        element.innerHTML = stockItemRef.key;
+
+        return element;
+    }
+
+</script>
+
+<script>
+
+    stockItemsRef.on('child_added', snap => {
+
+        const stockItemRef = stockItemsRef.child(snap.key);
+        const stockItemData = snap.val();
+
+        const element = buildStockItemElement(stockItemRef);
+
+        if (stockItemData.isNew) {
+
+            stockList.listElement.insertBefore(element, stockList.listElement.firstChild);
+            setTimeout(() => stockItemRef.child('isNew').set(false), 1000);
+
+        } else {
+
+            stockList.listElement.appendChild(element);
+
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>

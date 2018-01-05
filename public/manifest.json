@@ -1,0 +1,8 @@
+{
+  "name": "Geladão Manager",
+  "short_name": "Geladão Manager",
+  "start_url": "/geladao",
+  "display": "standalone",
+  "background_color": "#0D47A1",
+  "description": "O incrível sistema de reservas de GELADÃO."
+}
